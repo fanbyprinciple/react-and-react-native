@@ -1,20 +1,18 @@
 import { Image,  Platform } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { StatusBar } from 'expo-status-bar';
+import AppContainer from '@/components/app-container';
 
 export default function HomeScreen() {
   return (
+    <AppContainer>
     <View style={styles.titleContainer}>
       <Text>Hello World</Text>
       <StatusBar style="auto" />
     </View>
-
+    </AppContainer>
   );
 }
 

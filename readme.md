@@ -6,3 +6,6 @@
 
 https://www.youtube.com/watch?v=bIQII7gTXDE&list=PLY3ncAV1dSVA9ltOEMgzT8ZTZiccpOUkX&index=1
 
+#devulist
+
+weekend project

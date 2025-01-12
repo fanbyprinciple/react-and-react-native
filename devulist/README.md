@@ -12,3 +12,7 @@ Theme added, wow!
 
 13.54
 ![](2025-01-11-05-33-10.png)
+
+20.00 Problem with bezier curve
+![](2025-01-12-14-02-31.png)
+

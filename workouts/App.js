@@ -6,10 +6,12 @@ export default function App() {
   const exercise = exercises[0]
   
   return (
-    <View >
-      <Text style={styles.exerciseName}>{exercise.name}</Text>
-      <Text style={styles.exerciseSubtitle}>{exercise.name}</Text>
-      <StatusBar style="auto" />
+    <View style={styles.container}>
+      <View style={styles.excerciseContainer}>
+        <Text style={styles.exerciseName}>{exercise.name}</Text>
+        <Text style={styles.exerciseSubtitle}>{exercise.muscle.toUpperCase()} | {exercise.equipment.toUpperCase()}</Text>
+        <StatusBar style="auto" />
+        </View>
     </View>
   );
 }
@@ -17,11 +19,22 @@ export default function App() {
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    alignContent:'center',
-    alignItems:'center',
+    backgroundColor:'gainsboro',
+    justifyContent:'center',
+    padding:10,
+
+  },
+  excerciseContainer:{
+    padding:10,
+    borderRadius:10,  
+    gap:5,
+    backgroundColor:'#fff'
   },
   exerciseName: {
-    fontSize: '500'
+    fontWeight: '500',
+    fontSize: 20,
+     
+   
   },
   exerciseSubtitle: {
     color: 'dimgrey'

@@ -17,7 +17,7 @@ export default function ExerciseListItem({item}){
   const styles = StyleSheet.create({
 
     excerciseContainer:{
-      padding:10,
+      padding:10,   
       borderRadius:10,  
       gap:5 ,
       backgroundColor:'#fff'

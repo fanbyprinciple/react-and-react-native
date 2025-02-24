@@ -12,14 +12,14 @@ const MyCalendar = () => {
   const customTheme = {
     agendaDayTextColor: '#2d4150',
     agendaDayNumColor: '#2d4150',
-    agendaTodayColor: '#2196F3',
-    agendaKnobColor: '#2196F3',
+    agendaTodayColor: '#FF69B4',
+    agendaKnobColor: '#FF69B4',
     backgroundColor: '#ffffff',
     calendarBackground: '#ffffff',
     textSectionTitleColor: '#b6c1cd',
-    selectedDayBackgroundColor: '#2196F3',
+    selectedDayBackgroundColor: '#FF69B4',
     selectedDayTextColor: '#ffffff',
-    todayTextColor: '#2196F3',
+    todayTextColor: '#FF69B4',
     dayTextColor: '#2d4150',
   };
 
@@ -140,6 +140,57 @@ const MyCalendar = () => {
   );
 };
 
+const renderWeekView = () => {
+  const currentDate = new Date();
+  const currentDay = currentDate.getDay();
+  const weekStart = new Date(currentDate);
+  weekStart.setDate(currentDate.getDate() - currentDay);
+  
+  const weekDates = [];
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(weekStart);
+    date.setDate(weekStart.getDate() + i);
+    weekDates.push(date);
+  }
+
+  return (
+    <View style={styles.weekContainer}>
+      {weekDates.map((date, dateIndex) => {
+        const dateString = date.toISOString().split('T')[0];
+        const hasEvents = items[dateString] && items[dateString].length > 0;
+        const isToday = date.toDateString() === new Date().toDateString();
+        
+        return (
+          <TouchableOpacity
+            key={dateIndex}
+            style={[
+              styles.dayCell,
+              hasEvents && styles.dayWithEvents,
+              isToday && styles.todayCell
+            ]}
+            onPress={() => {
+              setSelectedDate(dateString);
+              setModalVisible(true);
+            }}
+          >
+            <Text style={[styles.dayName, isToday && styles.todayText]}>
+              {date.toLocaleDateString('en-US', { weekday: 'short' })}
+            </Text>
+            <Text style={[styles.dayNumber, isToday && styles.todayText]}>
+              {date.getDate()}
+            </Text>
+            {hasEvents && (
+              <Text style={styles.eventCount}>
+                {items[dateString].length} events
+              </Text>
+            )}
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -223,6 +274,44 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     textAlign: 'center',
+  },
+  weekContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderColor: '#eee',
+  },
+  dayCell: {
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+    borderRadius: 8,
+  },
+  dayWithEvents: {
+    backgroundColor: '#FFF0F5',
+  },
+  todayCell: {
+    backgroundColor: '#FF69B4',
+  },
+  dayNumber: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2d4150',
+  },
+  dayName: {
+    fontSize: 12,
+    color: '#666',
+    marginBottom: 4,
+  },
+  todayText: {
+    color: '#ffffff',
+  },
+  eventCount: {
+    fontSize: 10,
+    color: '#FF69B4',
+    marginTop: 4,
   },
 });
 

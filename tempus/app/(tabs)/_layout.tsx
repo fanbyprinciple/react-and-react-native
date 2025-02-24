@@ -20,7 +20,7 @@ export default function TabLayout() {
       <Tabs
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: '#2196F3',
+          tabBarActiveTintColor: '#FF69B4',
           tabBarStyle: {
             backgroundColor: '#ffffff',
           }
@@ -28,15 +28,15 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: 'Calendar',
+            title: 'Weekly View',
             tabBarIcon: ({ color }) => <IconSymbol name="calendar" color={color} size={24} />,
           }}
         />
         <Tabs.Screen
           name="explore"
           options={{
-            title: 'Explore',
-            tabBarIcon: ({ color }) => <IconSymbol name="magnifyingglass" color={color} size={24} />,
+            title: 'Year View',
+            tabBarIcon: ({ color }) => <IconSymbol name="calendar.badge.clock" color={color} size={24} />,
           }}
         />
       </Tabs>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#FF69B4',
     paddingTop: 40,
     paddingBottom: 10,
     alignItems: 'center',

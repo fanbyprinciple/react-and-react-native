@@ -6,14 +6,19 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "android": {
-        "buildType": "apk"
+      "ios": {
+        "simulator": true
       }
     },
     "preview": {
       "distribution": "internal",
-      "android": {
-        "buildType": "apk"
+      "ios": {
+        "simulator": true
+      }
+    },
+    "production": {
+      "ios": {
+        "resourceClass": "m-medium"
       }
     }
   }

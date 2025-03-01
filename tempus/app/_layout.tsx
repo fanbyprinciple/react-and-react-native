@@ -1,43 +1,59 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { Calendar } from 'react-native-calendars';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState, useEffect } from 'react';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return (
-      <Stack>
-        <Stack.Screen name="splash-screen" options={{ headerShown: false }} />
-      </Stack>
-    );
-  }
-
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="splash-screen" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
-  );
+// Interface for marked dates
+interface MarkedDates {
+  [date: string]: {
+    selected: boolean;
+    marked: boolean;
+    selectedColor: string;
+  };
 }
+
+// Custom hook to manage marked dates
+const useMarkedDates = () => {
+  const [markedDates, setMarkedDates] = useState<MarkedDates>({});
+
+  // Load marked dates from storage on component mount
+  useEffect(() => {
+    loadMarkedDates();
+  }, []);
+
+  // Load marked dates from AsyncStorage
+  const loadMarkedDates = async () => {
+    try {
+      const storedDates = await AsyncStorage.getItem('markedDates');
+      if (storedDates) {
+        setMarkedDates(JSON.parse(storedDates));
+      }
+    } catch (error) {
+      console.error('Error loading marked dates:', error);
+    }
+  };
+
+  // Save marked dates to AsyncStorage
+  const saveMarkedDates = async (dates: MarkedDates) => {
+    try {
+      await AsyncStorage.setItem('markedDates', JSON.stringify(dates));
+    } catch (error) {
+      console.error('Error saving marked dates:', error);
+    }
+  };
+
+  // Toggle date marking
+  const toggleDateMark = (date: string) => {
+    const updatedDates = {
+      ...markedDates,
+      [date]: {
+        selected: true,
+        marked: true,
+        selectedColor: '#50cebb',
+      },
+    };
+    setMarkedDates(updatedDates);
+    saveMarkedDates(updatedDates);
+  };
+
+  return { markedDates, toggleDateMark };
+};

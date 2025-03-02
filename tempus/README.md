@@ -6,3 +6,6 @@ eas build --platform ios --profile development
 
 eas build --platform ios --profile production
 
+for local build
+
+npx expo run:android

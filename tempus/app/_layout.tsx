@@ -32,7 +32,7 @@ const useMarkedDates = () => {
     }
   };
 
-  // Save marked dates to AsyncStorage
+  // Save marked dates to AsyncStoragewha
   const saveMarkedDates = async (dates: MarkedDates) => {
     try {
       await AsyncStorage.setItem('markedDates', JSON.stringify(dates));

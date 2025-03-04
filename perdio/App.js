@@ -30,6 +30,7 @@ const App = () => {
       console.error('Failed to save items:', error);
     }
   };
+  //hih
 
   const addEvent = () => {
     if (!newEvent.trim()) {

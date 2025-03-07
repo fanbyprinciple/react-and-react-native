@@ -20,3 +20,7 @@ https://medium.com/@worachote/building-a-todo-list-app-with-react-native-a-step-
 from https://www.geeksforgeeks.org/how-to-create-todo-app-using-react-native/
 
 ![alt text](image.png)
+
+# next tutorial
+
+https://levelup.gitconnected.com/build-a-chess-tactics-app-with-react-part-1-49be01fc63b5

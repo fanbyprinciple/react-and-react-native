@@ -1,32 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ReactStars from 'react-stars';
 import './App.css';
 
 function Users() {
-    // Sample data - replace with your actual data source
-    const [users, setUsers] = useState([
-        {
-            id: 1,
-            name: "John Doe",
-            rank: "Senior",
-            designation: "Software Engineer",
-            date: "2024-03-11"
-        },
-        {
-            id: 2,
-            name: "Jane Smith",
-            rank: "Lead",
-            designation: "Project Manager",
-            date: "2024-03-10"
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        fetchReviews();
+    }, []);
+
+    const fetchReviews = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/api/reviews');
+            if (response.ok) {
+                const data = await response.json();
+                setUsers(data);
+            }
+        } catch (error) {
+            console.error('Error fetching reviews:', error);
         }
-    ]);
+    };
 
     return (
         <div className="container mt-5 fade-in">
             <div className="d-flex justify-content-between align-items-center mb-4">
-                <h2 className="form-title">Users List</h2>
+                <h2 className="form-title">Reviews List</h2>
                 <Link to="/create" className="btn btn-primary">
-                    Add New User
+                    Add New Review
                 </Link>
             </div>
             
@@ -37,20 +38,37 @@ function Users() {
                             <th>Name</th>
                             <th>Rank</th>
                             <th>Designation</th>
+                            <th>Rating</th>
+                            <th>Comment</th>
                             <th>Date</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {users.map((user) => (
-                            <tr key={user.id}>
+                            <tr key={user._id}>
                                 <td>{user.name}</td>
                                 <td>{user.rank}</td>
                                 <td>{user.designation}</td>
-                                <td>{user.date}</td>
+                                <td>
+                                    <ReactStars
+                                        count={5}
+                                        value={user.rating}
+                                        size={20}
+                                        color2={'#ffd700'}
+                                        edit={false}
+                                        half={false}
+                                    />
+                                </td>
+                                <td>
+                                    <div className="comment-cell">
+                                        {user.comment}
+                                    </div>
+                                </td>
+                                <td>{new Date(user.date).toLocaleDateString()}</td>
                                 <td>
                                     <Link 
-                                        to={`/update/${user.id}`} 
+                                        to={`/update/${user._id}`} 
                                         className="btn btn-primary btn-sm me-2"
                                     >
                                         Edit
@@ -58,7 +76,7 @@ function Users() {
                                     <button 
                                         className="btn btn-danger btn-sm"
                                         onClick={() => {
-                                            console.log("Delete user:", user.id);
+                                            console.log("Delete user:", user._id);
                                         }}
                                     >
                                         Delete

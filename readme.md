@@ -24,3 +24,12 @@ from https://www.geeksforgeeks.org/how-to-create-todo-app-using-react-native/
 # next tutorial
 
 https://levelup.gitconnected.com/build-a-chess-tactics-app-with-react-part-1-49be01fc63b5
+
+# creating a chess app
+
+lets try and create from scratch
+
+1. installing expo
+2. creating chess ui handler
+3. showing ti on screen of the app
+4. making an app file

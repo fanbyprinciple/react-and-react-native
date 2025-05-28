@@ -1,0 +1,114 @@
+// Top-level plugins block (usually correct as generated)
+plugins {
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+    // Add kapt if you were using dependencies requiring annotation processing
+    // id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.example.Facefilter' // Corrected name to match previous steps? Use your actual namespace
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.Facefilter" // Use your actual application ID
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true // Good practice
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false // Set to true for release builds usually
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        // debug { // You can add a debug build type if needed
+        // }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    // --- Corrected buildFeatures ---
+    // Enable View Binding (for accessing views like binding.viewFinder)
+    // Removed 'compose = true' as the original request used XML Views
+    buildFeatures {
+        viewBinding true
+        // Removed: compose true // Re-add if you ARE using Jetpack Compose UI
+    }
+
+    // Removed composeOptions block as compose buildFeature was removed
+    // composeOptions {
+    //     kotlinCompilerExtensionVersion '1.5.1' // Make sure this aligns with your Compose versions if you re-add it
+    // }
+
+    // --- Corrected packaging block name ---
+    packagingOptions { // Renamed from 'packaging' to 'packagingOptions'
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            // You might need to add others depending on dependencies:
+            // excludes += "/META-INF/LICENSE.txt"
+            // excludes += "/META-INF/NOTICE.txt"
+        }
+    }
+} // End of android block
+
+// Define CameraX version variable (This is fine)
+def cameraxVersion = "1.3.0" // Check for the absolute latest version
+
+dependencies {
+    // Default/Core Dependencies (Using Version Catalog aliases from libs.versions.toml)
+    implementation libs.androidx.core.ktx // KTX for core Kotlin extensions
+    implementation libs.androidx.appcompat // AppCompat support library
+    implementation libs.material // Material Design components
+    implementation libs.androidx.constraintlayout // ConstraintLayout for layout design
+
+    // CameraX Libraries (Mixing variable and direct strings is okay here)
+    implementation "androidx.camera:camera-core:$cameraxVersion"
+    implementation "androidx.camera:camera-camera2:$cameraxVersion" // Camera2 implementation
+    implementation "androidx.camera:camera-lifecycle:$cameraxVersion" // Lifecycle integration
+    implementation "androidx.camera:camera-view:$cameraxVersion" // For PreviewView
+
+    // ML Kit Face Detection (Using Version Catalog alias)
+    // Make sure 'play-services-mlkit-face-detection = { group = "com.google.android.gms", name = "play-services-mlkit-face-detection", version = "17.1.0" }'
+    // or similar is defined in your libs.versions.toml file
+    implementation libs.play.services.mlkit.face.detection
+
+    // Kotlin Coroutines (Using Version Catalog alias)
+    // Make sure 'kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version = "1.7.3" }'
+    // or similar is defined in your libs.versions.toml file
+    implementation libs.kotlinx.coroutines.android
+
+    // Testing Dependencies (Using Version Catalog aliases)
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit // AndroidX Test JUnit extension
+    androidTestImplementation libs.androidx.espresso.core // Espresso UI testing framework
+
+    // Add lifecycle runtime dependency if not already included transitively (often needed with CameraX/ViewModel)
+    implementation libs.androidx.lifecycle.runtime.ktx // Or the non-ktx version if preferred
+
+    // If you were using Compose, you would add dependencies like these:
+    // implementation platform(libs.androidx.compose.bom)
+    // implementation libs.androidx.compose.ui
+    // implementation libs.androidx.compose.ui.graphics
+    // implementation libs.androidx.compose.ui.tooling.preview
+    // implementation libs.androidx.compose.material3
+    // implementation libs.androidx.activity.compose
+    // androidTestImplementation platform(libs.androidx.compose.bom)
+    // androidTestImplementation libs.androidx.compose.ui.test.junit4
+    // debugImplementation libs.androidx.compose.ui.tooling
+    // debugImplementation libs.androidx.compose.ui.test.manifest
+
+}
